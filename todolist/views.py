@@ -49,3 +49,10 @@ def delete_task(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
     return redirect("index")
+
+
+def complete_task(request, pk):
+    task = Task.objects.get(id=pk)
+    task.completed = not task.completed
+    task.save()
+    return redirect("index")

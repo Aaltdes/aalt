@@ -19,7 +19,9 @@ Tasks
             <div class="input-group mb-3">
                 {{ task_form.title }}
 
-                <button type="submit" class="btn btn-primary btn-lg">ADD</button>
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle-fill"></i>
+                </button>
             </div>
         </form>
 
@@ -32,6 +34,9 @@ Tasks
                         {{ task.title }}
 
                         <div style="float: right;">
+                            <a href="{% url 'complete_task' task.id %}" class="btn btn-sm btn-success">
+                                <i class="bi bi-check-square-fill"></i>
+                            </a>
                             <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-secondary">
                                 <i class="bi bi-brush-fill"></i>
                             </a>
