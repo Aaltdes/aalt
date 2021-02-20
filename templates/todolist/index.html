@@ -1,0 +1,33 @@
+{% extends 'todolist/base.html' %}
+
+{% block title %}
+Tasks
+{% endblock title %}
+
+{% block content %}
+    <h1>TODO List</h1>
+
+    <form method="post">
+        <!-- avoid cross-site request forgery (CSRF) attacks -->
+        {% csrf_token %}
+
+        {{ task_form.title }}
+
+        <button type="submit">ADD</button>
+    </form>
+
+    <ol>
+        {% for task in tasks %}
+            <li>
+                {% if task.completed == True %}
+                    <strike>{{ task.title }}</strike>
+                {% else %}
+                    {{ task.title }}
+                {% endif %}
+
+                | <a href="{% url 'edit_task' task.id %}">Edit</a>
+                | <a href="{% url 'delete_task' task.id %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock content %}
