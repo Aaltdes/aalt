@@ -5,14 +5,27 @@ Edit task
 {% endblock title %}
 
 {% block content %}
+<div class="card">
 
-<form method="post">
-    <!-- avoid cross-site request forgery (CSRF) attacks -->
-    {% csrf_token %}
+    <div class="card-header">
+        <h1 class="text-center">TODO List</h1>
+    </div>
 
-    {{ task_edit_form }}
+    <div class="card-body">
+        <form method="post">
+            <!-- avoid cross-site request forgery (CSRF) attacks -->
+            {% csrf_token %}
 
-    <button type="submit">Edit</button>
-</form>
+            <div class="input-group mb-3">
+                <div class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="Marked as completed">
+                    {{ task_edit_form.completed }}
+                </div>
 
+                {{ task_edit_form.title }}
+                <button type="submit" class="btn btn-lg btn-info">Edit</button>
+            </div>
+        </form>
+    </div>
+
+</div>
 {% endblock content %}

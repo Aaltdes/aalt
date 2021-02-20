@@ -5,29 +5,68 @@ Tasks
 {% endblock title %}
 
 {% block content %}
-    <h1>TODO List</h1>
+<div class="card">
 
-    <form method="post">
-        <!-- avoid cross-site request forgery (CSRF) attacks -->
-        {% csrf_token %}
+    <div class="card-header">
+        <h1 class="text-center">TODO List</h1>
+    </div>
 
-        {{ task_form.title }}
+    <div class="card-body">
+        <form method="post">
+            <!-- avoid cross-site request forgery (CSRF) attacks -->
+            {% csrf_token %}
 
-        <button type="submit">ADD</button>
-    </form>
+            <div class="input-group mb-3">
+                {{ task_form.title }}
 
-    <ol>
-        {% for task in tasks %}
-            <li>
-                {% if task.completed == True %}
-                    <strike>{{ task.title }}</strike>
-                {% else %}
-                    {{ task.title }}
+                <button type="submit" class="btn btn-primary btn-lg">ADD</button>
+            </div>
+        </form>
+
+        <h2 class="bg-secondary text-light py-2 rounded text-center">Current:</h2>
+
+        <ul class="list-group">
+            {% for task in tasks %}
+                {% if task.completed != True %}
+                    <li class="list-group-item list-group-item-action">
+                        {{ task.title }}
+
+                        <div style="float: right;">
+                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-secondary">
+                                <i class="bi bi-brush-fill"></i>
+                            </a>
+                            <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </li>
                 {% endif %}
+            {% endfor %}
+        </ul>
 
-                | <a href="{% url 'edit_task' task.id %}">Edit</a>
-                | <a href="{% url 'delete_task' task.id %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ol>
+        <br>
+
+        <h2 class="bg-secondary text-light py-2 rounded text-center">Completed:</h2>
+
+        <ul class="list-group">
+            {% for task in tasks %}
+                {% if task.completed == True %}
+                    <li class="list-group-item list-group-item-action">
+                        {{ task.title }}
+
+                        <div style="float: right;">
+                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-secondary">
+                                <i class="bi bi-brush-fill"></i>
+                            </a>
+                            <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
 {% endblock content %}
