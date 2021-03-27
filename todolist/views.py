@@ -13,7 +13,7 @@ def index(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("index")
+            return redirect("todo_index")
 
     tasks = Task.objects.all()
 
@@ -35,7 +35,7 @@ def edit_task(request, pk):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect("index")
+            return redirect("todo_index")
 
     return render(
         request, "todolist/edit_task.html",
@@ -48,11 +48,11 @@ def edit_task(request, pk):
 def delete_task(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
-    return redirect("index")
+    return redirect("todo_index")
 
 
 def complete_task(request, pk):
     task = Task.objects.get(id=pk)
     task.completed = not task.completed
     task.save()
-    return redirect("index")
+    return redirect("todo_index")
